@@ -1,0 +1,307 @@
+:root {
+    --bg-color: #eef7ff; 
+    --text-color: #1a2530; 
+    --card-bg: rgba(255, 255, 255, 0.75); 
+    --accent-color: #7cbdff; 
+    --cloud-blur: 3px;
+    
+    /* СВЕТЛАЯ ТЕМА: Облака заметно ТЕМНЕЕ нежно-голубого неба */
+    --cloud-color: #bcdcfc; 
+
+    /* СВЕТЛАЯ ТЕМА: Максимально контрастные тапочки */
+    --slipper-sole: #ffffff;        
+    --slipper-strap: #a4d4fc;       
+    --slipper-contour: #1a2530;     /* Четкий темный контур */
+    --line-color: rgba(26, 37, 48, 0.15); 
+}
+
+[data-theme="dark"] {
+    --bg-color: #0b111a; 
+    --text-color: #ffffff; 
+    --card-bg: rgba(22, 34, 48, 0.85);
+    --accent-color: #4a8ec2;
+    --cloud-blur: 4px;
+    
+    /* ТЕМНАЯ ТЕМА: Облака НЕМНОГО СВЕТЛЕЕ черного фона неба */
+    --cloud-color: #212e3f; 
+
+    /* ТЕМНАЯ ТЕМА: Тапочки сделаны контрастными БЕЛЫМИ */
+    --slipper-sole: #ffffff;        
+    --slipper-strap: #ffffff;       
+    --slipper-contour: #ffffff;     /* Белый контрастный контур, который больше не пропадет */
+    --line-color: rgba(255, 255, 255, 0.15); 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body, html {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.5s ease, opacity 0.3s ease;
+}
+
+/* ФОН: Фикс размеров для отображения облаков */
+.cloud-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+    background: var(--cloud-color) !important;
+    border-radius: 100px;
+    filter: blur(var(--cloud-blur));
+    animation: float linear infinite;
+    transition: background-color 0.5s ease;
+}
+
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: var(--cloud-color) !important;
+    border-radius: 50%;
+}
+
+.cloud::before { width: 54%; height: 140%; top: -65%; left: 15%; }
+.cloud::after { width: 38%; height: 100%; top: -42%; right: 15%; }
+
+@keyframes float {
+    0% { transform: translateX(-450px); }
+    100% { transform: translateX(calc(100vw + 450px)); }
+}
+
+/* НАВИГАЦИЯ: Жестко фиксированная линия на одном уровне */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    background: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 100px); 
+    height: 1px;
+    background-color: var(--line-color);
+    transition: background-color 0.5s ease;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.logo .slipper-constructor {
+    display: none !important;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.nav-links svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-color);
+    opacity: 0.6;
+    transition: opacity 0.3s, fill 0.3s;
+}
+
+.nav-links a:hover svg, .nav-links a.active svg {
+    opacity: 1;
+}
+
+.nav-links a.active {
+    background: var(--card-bg);
+}
+
+.nav-links a.active svg {
+    fill: var(--accent-color);
+}
+
+/* Подсказки меню */
+.nav-links a::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--text-color);
+    color: var(--bg-color);
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.nav-links a:hover::after {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Переключатель темы */
+.theme-toggle-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.theme-toggle-btn:hover { background: var(--card-bg); }
+.theme-toggle-btn svg { width: 24px; height: 24px; fill: var(--text-color); }
+.theme-toggle-btn .sun-icon { display: none; }
+.theme-toggle-btn .moon-icon { display: block; }
+[data-theme="dark"] .theme-toggle-btn .sun-icon { display: block; }
+[data-theme="dark"] .theme-toggle-btn .moon-icon { display: none; }
+
+/* Контент */
+.container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 25px;
+    width: 100%;
+}
+
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 45px;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* === ТАПОЧЕК: ЧИСТАЯ ФОРМА БЕЗ ВНУТРЕННИХ ИСКАЖЕНИЙ === */
+.slipper-constructor {
+    width: 80px;
+    height: 100px;
+    position: relative;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.slipper-sole-primitive {
+    width: 50px;
+    height: 95px;
+    background: var(--slipper-sole);
+    border-radius: 30px 30px 25px 25px;
+    position: absolute;
+    bottom: 0;
+    border: 2px solid var(--slipper-contour); /* Чистый внешний контур */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.slipper-strap-primitive {
+    width: 56px;
+    height: 42px;
+    background: var(--slipper-strap);
+    border-radius: 20px 20px 10px 10px;
+    position: absolute;
+    top: 15px;
+    z-index: 2;
+    border: 2px solid var(--slipper-contour); /* Чистый внешний контур ремешка */
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+/* Полное удаление ломающего элемента */
+.slipper-mini-cloud {
+    display: none !important;
+}
+
+/* Переходы (Утопание в облаках) */
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transition-cloud-layer {
+    position: absolute;
+    width: 150vw;
+    height: 150vh;
+    background: var(--cloud-color);
+    border-radius: 50%;
+    transform: translateY(150vh);
+    transition: background-color 0.5s ease;
+}
+
+.transition-cloud-layer:nth-child(1) { z-index: 1; }
+.transition-cloud-layer:nth-child(2) { z-index: 2; width: 130vw; height: 130vh; margin-left: -20vw; }
+.transition-cloud-layer:nth-child(3) { z-index: 3; width: 110vw; height: 110vh; margin-top: -20vh; }
+
+.transition-overlay.active .transition-cloud-layer {
+    animation: cloudSink 1.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.transition-overlay.active .transition-cloud-layer:nth-child(2) { animation-delay: 0.1s; }
+.transition-overlay.active .transition-cloud-layer:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes cloudSink {
+    0% { transform: translateY(150vh) scale(0.8); border-radius: 50%; }
+    40%, 60% { transform: translateY(0) scale(1.2); border-radius: 0%; }
+    100% { transform: translateY(-150vh) scale(0.8); border-radius: 50%; }
+}
+
+footer { text-align: center; padding: 40px; font-size: 14px; opacity: 0.5; margin-top: auto; }
