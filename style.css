@@ -1,35 +1,34 @@
+/* ==========================================================================
+   1. ПЕРЕМЕННЫЕ И СИСТЕМНЫЕ НАСТРОЙКИ (Светлая и Тёмная темы)
+   ========================================================================== */
 :root {
-    --bg-color: #eef7ff; 
+    /* СВЕТЛАЯ ТЕМА: Легкое, воздушное небо */
+    --bg-color: #f3f7fc; 
+    --bg-gradient: linear-gradient(135deg, #f3f7fc 0%, #e8f1f9 100%);
     --text-color: #1a2530; 
-    --card-bg: rgba(255, 255, 255, 0.75); 
+    --text-secondary: #627285;
+    --card-bg: rgba(255, 255, 255, 0.45); 
+    --card-border: rgba(255, 255, 255, 0.6); 
     --accent-color: #7cbdff; 
-    --cloud-blur: 3px;
-    
-    /* СВЕТЛАЯ ТЕМА: Облака заметно ТЕМНЕЕ нежно-голубого неба */
-    --cloud-color: #bcdcfc; 
-
-    /* СВЕТЛАЯ ТЕМА: Максимально контрастные тапочки */
-    --slipper-sole: #ffffff;        
-    --slipper-strap: #a4d4fc;       
-    --slipper-contour: #1a2530;     /* Четкий темный контур */
-    --line-color: rgba(26, 37, 48, 0.15); 
+    --cloud-fog: rgba(255, 255, 255, 0.8);
+    --line-color: rgba(26, 37, 48, 0.1); 
+    --shadow-main: 0 30px 60px rgba(124, 189, 255, 0.12);
+    --slipper-shadow: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="dark"] {
+    /* ТЕМНАЯ ТЕМА: Глубокая космическая ночь */
     --bg-color: #0b111a; 
+    --bg-gradient: linear-gradient(135deg, #0b111a 0%, #131b26 100%);
     --text-color: #ffffff; 
-    --card-bg: rgba(22, 34, 48, 0.85);
+    --text-secondary: #8e9fae;
+    --card-bg: rgba(22, 34, 48, 0.4);
+    --card-border: rgba(255, 255, 255, 0.06);
     --accent-color: #4a8ec2;
-    --cloud-blur: 4px;
-    
-    /* ТЕМНАЯ ТЕМА: Облака НЕМНОГО СВЕТЛЕЕ черного фона неба */
-    --cloud-color: #212e3f; 
-
-    /* ТЕМНАЯ ТЕМА: Тапочки сделаны контрастными БЕЛЫМИ */
-    --slipper-sole: #ffffff;        
-    --slipper-strap: #ffffff;       
-    --slipper-contour: #ffffff;     /* Белый контрастный контур, который больше не пропадет */
-    --line-color: rgba(255, 255, 255, 0.15); 
+    --cloud-fog: rgba(28, 41, 57, 0.5);
+    --line-color: rgba(255, 255, 255, 0.08); 
+    --shadow-main: 0 30px 60px rgba(0, 0, 0, 0.4);
+    --slipper-shadow: rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -40,17 +39,19 @@
 }
 
 body, html {
-    background-color: var(--bg-color);
+    background: var(--bg-gradient);
     color: var(--text-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     position: relative;
-    transition: background-color 0.5s ease, opacity 0.3s ease;
+    transition: background 0.5s ease, color 0.3s ease, opacity 0.3s ease;
 }
 
-/* ФОН: Фикс размеров для отображения облаков */
+/* ==========================================================================
+   2. МИНИМАЛИСТИЧНЫЙ ФОН: Эффект парения в дымке
+   ========================================================================== */
 .cloud-bg {
     position: fixed;
     top: 0;
@@ -61,36 +62,46 @@ body, html {
     pointer-events: none;
 }
 
-.cloud {
+/* Мягкие абстрактные парящие сферы-облака вместо старых тяжелых дивов */
+.cloud-bg::before,
+.cloud-bg::after {
+    content: '';
     position: absolute;
-    background: var(--cloud-color) !important;
-    border-radius: 100px;
-    filter: blur(var(--cloud-blur));
-    animation: float linear infinite;
+    background: var(--cloud-fog);
+    border-radius: 50%;
+    filter: blur(80px);
     transition: background-color 0.5s ease;
 }
 
-.cloud::before, .cloud::after {
-    content: '';
-    position: absolute;
-    background: var(--cloud-color) !important;
-    border-radius: 50%;
+.cloud-bg::before {
+    width: 450px;
+    height: 450px;
+    top: -100px;
+    right: -50px;
+    animation: floatBgCloud 15s ease-in-out infinite alternate;
 }
 
-.cloud::before { width: 54%; height: 140%; top: -65%; left: 15%; }
-.cloud::after { width: 38%; height: 100%; top: -42%; right: 15%; }
-
-@keyframes float {
-    0% { transform: translateX(-450px); }
-    100% { transform: translateX(calc(100vw + 450px)); }
+.cloud-bg::after {
+    width: 600px;
+    height: 600px;
+    bottom: -200px;
+    left: -150px;
+    animation: floatBgCloud 22s ease-in-out infinite alternate-reverse;
 }
 
-/* НАВИГАЦИЯ: Жестко фиксированная линия на одном уровне */
+@keyframes floatBgCloud {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 40px) scale(1.15); }
+}
+
+/* ==========================================================================
+   3. НАВИГАЦИЯ: Стеклянная адаптивная панель
+   ========================================================================== */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 50px;
+    padding: 20px 50px;
     background: transparent;
     position: sticky;
     top: 0;
@@ -110,15 +121,12 @@ nav::after {
 }
 
 .logo {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--text-color);
     text-decoration: none;
     letter-spacing: 2px;
-}
-
-.logo .slipper-constructor {
-    display: none !important;
+    transition: color 0.3s;
 }
 
 .nav-container {
@@ -129,7 +137,7 @@ nav::after {
 
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 20px;
     list-style: none;
 }
 
@@ -138,52 +146,62 @@ nav::after {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    padding: 10px;
+    padding: 12px;
     border-radius: 50%;
     position: relative;
+    background: transparent;
+    transition: background 0.3s;
+}
+
+.nav-links a:hover {
+    background: var(--card-bg);
 }
 
 .nav-links svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     fill: var(--text-color);
     opacity: 0.6;
-    transition: opacity 0.3s, fill 0.3s;
+    transition: opacity 0.3s, fill 0.3s, transform 0.3s;
 }
 
-.nav-links a:hover svg, .nav-links a.active svg {
+.nav-links a:hover svg, 
+.nav-links a.active svg {
     opacity: 1;
+    transform: scale(1.05);
 }
 
 .nav-links a.active {
     background: var(--card-bg);
+    border: 1px solid var(--card-border);
 }
 
 .nav-links a.active svg {
     fill: var(--accent-color);
 }
 
-/* Подсказки меню */
+/* Всплывающие подсказки (Tooltips) */
 .nav-links a::after {
     content: attr(data-title);
     position: absolute;
     bottom: -35px;
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(8px);
     background: var(--text-color);
     color: var(--bg-color);
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 5px 12px;
+    font-size: 11px;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 20px;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .nav-links a:hover::after {
-    opacity: 0.9;
+    opacity: 0.95;
     transform: translateX(-50%) translateY(0);
 }
 
@@ -195,93 +213,167 @@ nav::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 12px;
     border-radius: 50%;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.theme-toggle-btn:hover { background: var(--card-bg); }
-.theme-toggle-btn svg { width: 24px; height: 24px; fill: var(--text-color); }
+.theme-toggle-btn:hover { 
+    background: var(--card-bg); 
+    transform: scale(1.05);
+}
+
+.theme-toggle-btn svg { width: 22px; height: 22px; fill: var(--text-color); }
 .theme-toggle-btn .sun-icon { display: none; }
 .theme-toggle-btn .moon-icon { display: block; }
 [data-theme="dark"] .theme-toggle-btn .sun-icon { display: block; }
 [data-theme="dark"] .theme-toggle-btn .moon-icon { display: none; }
 
-/* Контент */
+/* ==========================================================================
+   4. КОНТЕНТНАЯ ЗОНА: Элегантная карточка Glassmorphism
+   ========================================================================== */
 .container {
-    max-width: 1100px;
-    margin: 60px auto;
-    padding: 0 25px;
+    max-width: 1140px;
+    margin: auto;
+    padding: 40px 25px;
     width: 100%;
-}
-
-.glass-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 45px;
-    border-radius: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* === ТАПОЧЕК: ЧИСТАЯ ФОРМА БЕЗ ВНУТРЕННИХ ИСКАЖЕНИЙ === */
-.slipper-constructor {
-    width: 80px;
-    height: 100px;
-    position: relative;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: center;
-}
-
-.slipper-sole-primitive {
-    width: 50px;
-    height: 95px;
-    background: var(--slipper-sole);
-    border-radius: 30px 30px 25px 25px;
-    position: absolute;
-    bottom: 0;
-    border: 2px solid var(--slipper-contour); /* Чистый внешний контур */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-    transition: background-color 0.5s ease, border-color 0.5s ease;
-}
-
-.slipper-strap-primitive {
-    width: 56px;
-    height: 42px;
-    background: var(--slipper-strap);
-    border-radius: 20px 20px 10px 10px;
-    position: absolute;
-    top: 15px;
-    z-index: 2;
-    border: 2px solid var(--slipper-contour); /* Чистый внешний контур ремешка */
-    transition: background-color 0.5s ease, border-color 0.5s ease;
-}
-
-/* Полное удаление ломающего элемента */
-.slipper-mini-cloud {
-    display: none !important;
-}
-
-/* Переходы (Утопание в облаках) */
-.transition-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99999;
-    pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 60px;
+    border-radius: 40px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-main);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+    transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Левая текстовая колонка */
+.hero-text {
+    flex: 1.2;
+    max-width: 500px;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.hero-text p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 35px;
+}
+
+/* Кнопка призыва к действию */
+.cta-btn {
+    display: inline-block;
+    background: var(--text-color);
+    color: var(--bg-color);
+    padding: 16px 38px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, background-color 0.5s, color 0.5s;
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* ==========================================================================
+   5. ФИКС ИНТЕГРАЦИИ ИЗОБРАЖЕНИЯ: Облако-Подиум и Левитация PNG
+   ========================================================================== */
+.hero-image {
+    flex: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 320px;
+}
+
+/* Управление новой пушистой PNG картинкой с рабочего стола */
+.hero-image img.slipper-constructor {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    z-index: 2;
+    transform: scale(1.15);
+    /* Интегрируем мягкую тень, которая повторяет контур пушинок */
+    filter: drop-shadow(0 15px 25px var(--slipper-shadow));
+    animation: floatSlipper 6s ease-in-out infinite;
+    display: block !important; /* Отменяем возможное скрытие */
+}
+
+/* Мягкое размытое облако под тапком, выполняющее роль живой тени */
+.hero-image::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    width: 65%;
+    height: 25px;
+    background: var(--cloud-fog);
+    border-radius: 50%;
+    filter: blur(10px);
+    z-index: 1;
+    box-shadow: 0 10px 30px var(--cloud-fog);
+    animation: shadowScale 6s ease-in-out infinite;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Плавная левитация пушистого тапочка */
+@keyframes floatSlipper {
+    0%, 100% { transform: scale(1.15) translateY(0) rotate(0deg); }
+    50% { transform: scale(1.15) translateY(-20px) rotate(2deg); }
+}
+
+/* Синхронное изменение плотности тени-облака при взлете тапка */
+@keyframes shadowScale {
+    0%, 100% { transform: scale(1); opacity: 0.7; filter: blur(10px); }
+    50% { transform: scale(0.85); opacity: 0.35; filter: blur(16px); }
+}
+
+/* Старые примитивы полностью аннулируются */
+.slipper-sole-primitive, 
+.slipper-strap-primitive, 
+.slipper-mini-cloud {
+    display: none !important;
+}
+
+/* ==========================================================================
+   6. ОСТАЛЬНЫЕ ЭЛЕМЕНТЫ (Transition & Footer)
+   ========================================================================== */
+.transition-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 99999;
+    pointer-events: none;
+    display: flex;
+    align-items: center; justify-content: center;
+}
+
 .transition-cloud-layer {
     position: absolute;
-    width: 150vw;
-    height: 150vh;
-    background: var(--cloud-color);
+    width: 150vw; height: 150vh;
+    background: var(--cloud-fog);
     border-radius: 50%;
     transform: translateY(150vh);
     transition: background-color 0.5s ease;
@@ -290,18 +382,34 @@ nav::after {
 .transition-cloud-layer:nth-child(1) { z-index: 1; }
 .transition-cloud-layer:nth-child(2) { z-index: 2; width: 130vw; height: 130vh; margin-left: -20vw; }
 .transition-cloud-layer:nth-child(3) { z-index: 3; width: 110vw; height: 110vh; margin-top: -20vh; }
-
 .transition-overlay.active .transition-cloud-layer {
-    animation: cloudSink 1.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+animation: cloudSink 1.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
 }
-
 .transition-overlay.active .transition-cloud-layer:nth-child(2) { animation-delay: 0.1s; }
 .transition-overlay.active .transition-cloud-layer:nth-child(3) { animation-delay: 0.2s; }
-
 @keyframes cloudSink {
-    0% { transform: translateY(150vh) scale(0.8); border-radius: 50%; }
-    40%, 60% { transform: translateY(0) scale(1.2); border-radius: 0%; }
-    100% { transform: translateY(-150vh) scale(0.8); border-radius: 50%; }
+0% { transform: translateY(150vh) scale(0.8); border-radius: 50%; }
+40%, 60% { transform: translateY(0) scale(1.2); border-radius: 0%; }
+100% { transform: translateY(-150vh) scale(0.8); border-radius: 50%; }
 }
-
-footer { text-align: center; padding: 40px; font-size: 14px; opacity: 0.5; margin-top: auto; }
+footer {
+text-align: center;
+padding: 30px;
+font-size: 13px;
+color: var(--text-secondary);
+opacity: 0.6;
+margin-top: auto;
+}
+/* Адаптивный дизайн для мобильных устройств */
+@media (max-width: 912px) {
+nav { padding: 20px 25px; }
+nav::after { width: calc(100% - 50px); }
+.glass-card { flex-direction: column-reverse; padding: 40px 30px; text-align: center; gap: 30px; }
+.hero-text h1 { font-size: 34px; }
+.hero-image { min-height: 24px; width: 100%; }
+.hero-image img.slipper-constructor { max-width: 70%; transform: scale(1); }
+@keyframes floatSlipper {
+0%, 100% { transform: scale(1) translateY(0); }
+50% { transform: scale(1) translateY(-15px); }
+}
+}
