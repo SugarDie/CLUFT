@@ -7,34 +7,39 @@
     <link rel="stylesheet" href="style.css?v=11">
     <script src="script.js?v=11" defer></script>
     <style>
-        /* Специфичные исправления для текстового контента "О нас" */
+        /* Принудительно отменяем флекс-колонки из style.css */
         .about-card { 
-            display: block !important; /* Отменяем горизонтальные флекс-колонки из style.css */
+            display: block !important; 
             max-width: 800px; 
             margin: 0 auto; 
-            padding: 50px 60px;
+            padding: 50px 60px !important;
+            text-align: left !important;
         }
         .about-card h1 { 
             font-size: 40px; 
             font-weight: 800; 
             margin-bottom: 30px; 
             letter-spacing: -0.5px; 
-            text-align: left;
+            text-align: left !important;
+            display: block !important;
+            width: 100%;
         }
         .about-card p { 
             font-size: 18px; 
             line-height: 1.8; 
             opacity: 0.85; 
             margin-bottom: 25px; 
-            text-align: left;
+            text-align: left !important;
+            display: block !important;
+            width: 100%;
         }
         .about-card p:last-child {
             margin-bottom: 0;
         }
         
-        /* Адаптивность под мобильные экраны */
+        /* Мобильная адаптивность */
         @media (max-width: 600px) {
-            .about-card { padding: 35px 20px; }
+            .about-card { padding: 35px 20px !important; }
             .about-card h1 { font-size: 28px; margin-bottom: 20px; }
             .about-card p { font-size: 16px; line-height: 1.7; }
         }
@@ -77,7 +82,7 @@
     <main class="container">
         <article class="glass-card about-card">
             <h1>Наша философия</h1>
-            <p>Бренд CLUFT возник из простого желания: воссоздать ощущение прикосновения к мягкому кучевому облаку. Мы верим, что дом — это место силы, где каждый element одежды должен дарить тотальную перезагрузку.</p>
+            <p>Бренд CLUFT возник из простого желания: воссоздать ощущение прикосновения к мягкому кучевому облаку. Мы верим, что дом — это место силы, где каждый элемент одежды должен дарить тотальную перезагрузку.</p>
             <p>Мы полностью отказались от использования грубых синтетических клеев и жестких подошв. Наши тапочки собираются вручную с использованием ультрамягкого французского велюра и дышащего гипоаллергенного эко-меха.</p>
             <p>Инновационный трехслойный наполнитель с памятью формы полностью разгружает стопу после тяжелого дня. Шагайте налегке, шагайте по облакам вместе с CLUFT.</p>
         </article>
