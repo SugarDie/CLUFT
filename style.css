@@ -1,31 +1,18 @@
+/* ==========================================================================
+   1. ПЕРЕМЕННЫЕ И ЦВЕТОВАЯ ПАЛИТРА (На основе гортензии)
+   ========================================================================== */
 :root {
-    /* СВЕТЛАЯ ТЕМА: Легкое, воздушное небо */
-    --bg-color: #f3f7fc; 
-    --bg-gradient: linear-gradient(135deg, #f3f7fc 0%, #e8f1f9 100%);
-    --text-color: #1a2530; 
-    --text-secondary: #627285;
-    --card-bg: rgba(255, 255, 255, 0.45); 
-    --card-border: rgba(255, 255, 255, 0.6); 
-    --accent-color: #7cbdff; 
-    --cloud-fog: rgba(255, 255, 255, 0.8);
-    --line-color: rgba(26, 37, 48, 0.1); 
-    --shadow-main: 0 30px 60px rgba(124, 189, 255, 0.12);
-    --slipper-shadow: rgba(0, 0, 0, 0.08);
-}
-
-[data-theme="dark"] {
-    /* ТЕМНАЯ ТЕМА: Глубокая космическая ночь */
-    --bg-color: #0b111a; 
-    --bg-gradient: linear-gradient(135deg, #0b111a 0%, #131b26 100%);
-    --text-color: #ffffff; 
-    --text-secondary: #8e9fae;
-    --card-bg: rgba(22, 34, 48, 0.4);
-    --card-border: rgba(255, 255, 255, 0.06);
-    --accent-color: #4a8ec2;
-    --cloud-fog: rgba(28, 41, 57, 0.5);
-    --line-color: rgba(255, 255, 255, 0.08); 
-    --shadow-main: 0 30px 60px rgba(0, 0, 0, 0.4);
-    --slipper-shadow: rgba(0, 0, 0, 0.4);
+    --bg-color: #cde6f5; 
+    --bg-gradient: linear-gradient(135deg, #cde6f5 0%, #f5f9fc 100%);
+    --text-color: #344e73; 
+    --text-secondary: #60799f;
+    --card-bg: rgba(245, 249, 25c, 0.65); 
+    --card-border: rgba(255, 255, 255, 0.8); 
+    --accent-color: #a7c1e1; 
+    --cloud-fog: rgba(255, 255, 255, 0.5);
+    --line-color: rgba(52, 78, 115, 0.15); 
+    --shadow-main: 0 30px 60px rgba(52, 78, 115, 0.08);
+    --slipper-shadow: rgba(185, 168, 204, 0.3);
 }
 
 * {
@@ -43,7 +30,6 @@ body, html {
     flex-direction: column;
     overflow-x: hidden;
     position: relative;
-    transition: background 0.5s ease, color 0.3s ease, opacity 0.3s ease;
 }
 
 /* ==========================================================================
@@ -117,7 +103,6 @@ nav::after {
     width: calc(100% - 100px); 
     height: 1px;
     background-color: var(--line-color);
-    transition: background-color 0.5s ease;
 }
 
 .logo {
@@ -126,7 +111,6 @@ nav::after {
     color: var(--text-color);
     text-decoration: none;
     letter-spacing: 2px;
-    transition: color 0.3s;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -135,7 +119,6 @@ nav::after {
 .nav-container {
     display: flex;
     align-items: center;
-    gap: 40px;
 }
 
 .nav-links {
@@ -164,7 +147,7 @@ nav::after {
     width: 22px;
     height: 22px;
     fill: var(--text-color);
-    opacity: 0.6;
+    opacity: 0.7;
     transition: opacity 0.3s, fill 0.3s, transform 0.3s;
 }
 
@@ -180,7 +163,7 @@ nav::after {
 }
 
 .nav-links a.active svg {
-    fill: var(--accent-color);
+    fill: var(--text-color);
 }
 
 /* Всплывающие подсказки (Tooltips) */
@@ -191,7 +174,7 @@ nav::after {
     left: 50%;
     transform: translateX(-50%) translateY(8px);
     background: var(--text-color);
-    color: var(--bg-color);
+    color: #f5f9fc;
     padding: 5px 12px;
     font-size: 11px;
     font-weight: 600;
@@ -200,37 +183,13 @@ nav::after {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s, transform 0.3s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-main);
 }
 
 .nav-links a:hover::after {
     opacity: 0.95;
     transform: translateX(-50%) translateY(0);
 }
-
-/* Переключатель темы */
-.theme-toggle-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    border-radius: 50%;
-    transition: background 0.3s, transform 0.2s;
-}
-
-.theme-toggle-btn:hover { 
-    background: var(--card-bg); 
-    transform: scale(1.05);
-}
-
-.theme-toggle-btn svg { width: 22px; height: 22px; fill: var(--text-color); }
-.theme-toggle-btn .sun-icon { display: none; }
-.theme-toggle-btn .moon-icon { display: block; }
-[data-theme="dark"] .theme-toggle-btn .sun-icon { display: block; }
-[data-theme="dark"] .theme-toggle-btn .moon-icon { display: none; }
 
 /* ==========================================================================
    4. КОНТЕНТНАЯ ЗОНА: Элегантная карточка Glassmorphism
@@ -260,11 +219,14 @@ nav::after {
     gap: 60px;
     width: 100%;
     transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    
+    /* ФИКС СЕТКИ: Разрешает контенту переноситься по вертикали */
+    flex-wrap: wrap; 
 }
 
 .hero-text {
     flex: 1.2;
-    max-width: 500px;
+    min-width: 280px;
 }
 
 .hero-text h1 {
@@ -285,23 +247,23 @@ nav::after {
 .cta-btn {
     display: inline-block;
     background: var(--text-color);
-    color: var(--bg-color);
+    color: #f5f9fc;
     padding: 16px 38px;
     border-radius: 30px;
     text-decoration: none;
     font-weight: 700;
     font-size: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 20px rgba(52, 78, 115, 0.15);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, background-color 0.5s, color 0.5s;
 }
 
 .cta-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 28px rgba(52, 78, 115, 0.25);
 }
 
 /* ==========================================================================
-   5. ФИКС ИНТЕГРАЦИИ ИЗОБРАЖЕНИЯ: Облако-Подиум и Левитация PNG
+   5. ВЕКТОРНЫЕ ТАПОЧКИ И АНИМАЦИЯ ЛЕВИТАЦИИ
    ========================================================================== */
 .hero-image {
     flex: 0.9;
@@ -312,23 +274,13 @@ nav::after {
     min-height: 320px;
 }
 
-.hero-image img.slipper-constructor {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    z-index: 2;
-    transform: scale(1.15);
-    filter: drop-shadow(0 15px 25px var(--slipper-shadow));
-    animation: floatSlipper 6s ease-in-out infinite;
-}
-
 @keyframes floatSlipper {
-    0% { transform: translateY(0) scale(1.15); }
-    50% { transform: translateY(-15px) scale(1.15); }
-    100% { transform: translateY(0) scale(1.15); }
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
 }
 
-/* Векторный конструктор логотипа (если нет картинки) */
+/* Векторный конструктор тапочка */
 .slipper-constructor {
     position: relative;
     width: 32px;
@@ -378,5 +330,5 @@ footer {
 @media (max-width: 600px) {
     .nav-container { gap: 15px; }
     .nav-links { gap: 5px; }
-    .nav-links a::after { display: none; } /* Отключаем тултипы на смартфонах */
+    .nav-links a::after { display: none; }
 }
