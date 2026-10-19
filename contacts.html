@@ -4,90 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLUFT — Контакты</title>
-    <link rel="stylesheet" href="style.css?v=20">
-    <script src="script.js?v=20" defer></script>
+    <link rel="stylesheet" href="style.css?v=25">
+    <script src="script.js?v=25" defer></script>
     <style>
-        /* Изолированная структура, которая жестко чинит верстку */
-        .contacts-layout-box { 
-            display: block !important; 
-            flex-direction: column !important;
-            max-width: 600px !important; 
-            margin: 0 auto !important; 
-            padding: 50px 60px !important;
-            box-sizing: border-box !important;
-            width: 100% !important;
-        }
-        .contacts-layout-box h1 { 
-            font-size: 36px; 
-            font-weight: 800; 
-            margin-bottom: 15px; 
-            text-align: left !important; 
+        /* Создаем абсолютно независимый блок вместо ломающего сетку glass-card */
+        .custom-contacts-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-main);
+            transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+            
+            /* Жестко задаем вертикальное отображение в один столбец */
             display: block !important;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 50px 60px;
+            box-sizing: border-box;
+            width: 100%;
         }
-        .info-text { 
-            font-size: 16px; 
-            opacity: 0.8; 
-            line-height: 1.6; 
-            margin-bottom: 35px; 
-            text-align: left !important; 
-            display: block !important;
-        }
-        .form-group { 
-            margin-bottom: 20px; 
-            width: 100% !important; 
-            display: block !important;
-        }
+        
+        .custom-contacts-card h1 { font-size: 36px; font-weight: 800; margin-bottom: 15px; text-align: left; }
+        .info-text { font-size: 16px; opacity: 0.8; line-height: 1.6; margin-bottom: 35px; text-align: left; }
+        .form-group { margin-bottom: 20px; width: 100%; }
+        
         .input-premium { 
-            width: 100% !important; 
-            padding: 16px 20px !important; 
-            border: 1px solid rgba(0, 0, 0, 0.1) !important; 
-            background: rgba(0, 0, 0, 0.03) !important; 
-            color: var(--text-color) !important; 
-            border-radius: 16px !important; 
-            font-size: 15px !important; 
-            outline: none !important; 
-            transition: border-color 0.3s !important; 
-            box-sizing: border-box !important; 
-            display: block !important; 
+            width: 100%; 
+            padding: 16px 20px; 
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            background: rgba(0, 0, 0, 0.03); 
+            color: var(--text-color); 
+            border-radius: 16px; 
+            font-size: 15px; 
+            outline: none; 
+            transition: border-color 0.3s; 
+            box-sizing: border-box; 
+            display: block; 
         }
-        .input-premium:focus { 
-            border-color: var(--text-color) !important; 
-        }
-        textarea.input-premium { 
-            resize: vertical !important; 
-        }
+        .input-premium:focus { border-color: var(--text-color); }
+        textarea.input-premium { resize: vertical; }
+        
         .send-btn { 
-            width: 100% !important; 
-            background: var(--text-color) !important; 
-            color: var(--bg-color) !important; 
-            border: none !important; 
-            padding: 16px !important; 
-            border-radius: 16px !important; 
-            font-weight: 700 !important; 
-            font-size: 16px !important; 
-            cursor: pointer !important; 
-            transition: opacity 0.2s !important; 
-            display: block !important; 
+            width: 100%; 
+            background: var(--text-color); 
+            color: var(--bg-color); 
+            border: none; 
+            padding: 16px; 
+            border-radius: 16px; 
+            font-weight: 700; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: opacity 0.2s; 
+            display: block; 
         }
-        .send-btn:hover { 
-            opacity: 0.9 !important; 
-        }
+        .send-btn:hover { opacity: 0.9; }
 
-        /* Адаптация под темную тему */
         [data-theme="dark"] .input-premium {
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 <body>
-    <!-- Фоновый слой -->
     <div id="cloud-bg" class="cloud-bg"></div>
     
-    <!-- Шапка сайта и Навигация -->
     <header>
         <nav>
-            <a href="index.html?v=20" class="logo">
+            <a href="index.html?v=25" class="logo">
                 <div class="slipper-constructor">
                     <div class="slipper-sole-primitive"></div>
                     <div class="slipper-strap-primitive"></div>
@@ -97,11 +82,11 @@
             </a>
             <div class="nav-container">
                 <ul class="nav-links">
-                    <li><a href="index.html?v=20" data-title="Главная"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a></li>
-                    <li><a href="catalog.html?v=20" data-title="Каталог"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></a></li>
-                    <li><a href="about.html?v=20" data-title="О нас"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></a></li>
-                    <li><a href="reviews.html?v=20" data-title="Отзывы"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/></svg></a></li>
-                    <li><a href="contacts.html?v=20" class="active" data-title="Контакты"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a></li>
+                    <li><a href="index.html?v=25" data-title="Главная"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a></li>
+                    <li><a href="catalog.html?v=25" data-title="Каталог"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></a></li>
+                    <li><a href="about.html?v=25" data-title="О нас"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></a></li>
+                    <li><a href="reviews.html?v=25" data-title="Отзывы"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/></svg></a></li>
+                    <li><a href="contacts.html?v=25" class="active" data-title="Контакты"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a></li>
                 </ul>
                 <div class="controls-wrapper">
                     <button class="theme-toggle-btn" id="theme-btn" title="Сменить тему">
@@ -113,10 +98,9 @@
         </nav>
     </header>
 
-    <!-- Основная контентная зона -->
     <main class="container">
-        <!-- Замена класса на уникальный контактый бокс с флагами !important -->
-        <section class="glass-card contacts-layout-box">
+        <!-- Внимание: класс glass-card убран из разметки, задействован чистый custom-contacts-card -->
+        <section class="custom-contacts-card">
             <h1>Давайте общаться</h1>
             <p class="info-text">📍 Облачный бульвар, д. 7<br>✉ hello@cluft.store<br>📞 8 (800) 555-35-35</p>
             
@@ -135,7 +119,6 @@
         </section>
     </main>
 
-    <!-- Подвал сайта -->
     <footer><p>&copy; 2026 CLUFT — Мягкость в деталях</p></footer>
 </body>
 </html>
