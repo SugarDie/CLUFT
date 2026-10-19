@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLUFT — Отзывы</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css?v=26">
+    <script src="script.js?v=26" defer></script>
     <style>
-        .page-title { font-size: 36px; font-weight: 800; margin-bottom: 40px; text-align: center; }
-        .reviews-container { max-width: 750px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
-        .review-card { padding: 35px; border-radius: 24px; text-align: left; }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .author { font-weight: 700; font-size: 18px; }
-        .review-text { font-size: 16px; line-height: 1.7; opacity: 0.85; }
+        .reviews-wrapper { width: 100%; display: flex; flex-direction: column; }
+        .page-title { font-size: 36px; font-weight: 800; margin-bottom: 40px; text-align: center; width: 100%; }
+        .reviews-container { max-width: 750px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; width: 100%; }
+        
+        /* Создаем независимый стиль для карточек отзывов, отменяя ломающий flex из style.css */
+        .custom-review-card { 
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-main);
+            transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+            
+            display: block !important; 
+            padding: 35px; 
+            border-radius: 24px; 
+            text-align: left !important;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%; }
+        .author { font-weight: 700; font-size: 18px; text-align: left; }
+        .review-text { font-size: 16px; line-height: 1.7; opacity: 0.85; text-align: left !important; display: block !important; }
     </style>
 </head>
 <body>
+    <!-- Фоновый слой -->
     <div id="cloud-bg" class="cloud-bg"></div>
     
-    <div id="transition-overlay" class="transition-overlay">
-        <div class="transition-cloud-layer"></div>
-        <div class="transition-cloud-layer"></div>
-        <div class="transition-cloud-layer"></div>
-    </div>
-    
+    <!-- Шапка сайта и Навигация -->
     <header>
         <nav>
-            <a href="index.html" class="logo">
+            <a href="index.html?v=26" class="logo">
                 <div class="slipper-constructor">
                     <div class="slipper-sole-primitive"></div>
                     <div class="slipper-strap-primitive"></div>
@@ -36,15 +49,15 @@
             </a>
             <div class="nav-container">
                 <ul class="nav-links">
-                    <li><a href="index.html" data-title="Главная"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a></li>
-                    <li><a href="catalog.html" data-title="Каталог"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></a></li>
-                    <li><a href="about.html" data-title="О нас"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></a></li>
-                    <li><a href="reviews.html" class="active" data-title="Отзывы"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/></svg></a></li>
-                    <li><a href="contacts.html" data-title="Контакты"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a></li>
+                    <li><a href="index.html?v=26" data-title="Главная"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a></li>
+                    <li><a href="catalog.html?v=26" data-title="Каталог"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></a></li>
+                    <li><a href="about.html?v=26" data-title="О нас"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></a></li>
+                    <li><a href="reviews.html?v=26" class="active" data-title="Отзывы"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/></svg></a></li>
+                    <li><a href="contacts.html?v=26" data-title="Контакты"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a></li>
                 </ul>
                 <div class="controls-wrapper">
                     <button class="theme-toggle-btn" id="theme-btn" title="Сменить тему">
-                        <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41zm-12.37 12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41z"/></svg>
+                        <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41zm-12.37 12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41z"/></svg>
                         <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12.3 22c4.16 0 7.74-2.82 8.7-6.8-.2.0-.4.0-.6.0-5.52 0-10-4.48-10-10 0-.85.11-1.67.32-2.45C6.1 3.73 3 7.5 3 12c0 5.52 4.48 10 10 10z"/></svg>
                     </button>
                 </div>
@@ -52,25 +65,33 @@
         </nav>
     </header>
 
+    <!-- Основная контентная зона -->
     <main class="container">
-        <h1 class="page-title">Впечатления клиентов</h1>
-        <div class="reviews-container">
-            <article class="glass-card review-card">
-                <div class="review-header">
-                    <span class="author">Анна К.</span>
-                </div>
-                <p class="review-text">«Они действительно невесомые! Купила модель Classic White — цвет чистый, материал безумно нежный. Ноги просто поют после каблуков. Отдельное спасибо за эстетичный сайт!»</p>
-            </article>
-            
-            <article class="glass-card review-card">
-                <div class="review-header">
-                    <span class="author">Дмитрий М.</span>
-                </div>
-                <p class="review-text">«Заказал синие Dark Cumulus. Подошва не скользит по паркету, очень тихие. Ощущения от ходьбы непривычные, как будто наступаешь на мягкий мох. Топовое качество.»</p>
-            </article>
+        <div class="reviews-wrapper">
+            <h1 class="page-title">Впечатления клиентов</h1>
+            <div class="reviews-container">
+                
+                <!-- Заменен класс с glass-card на custom-review-card -->
+                <article class="custom-review-card">
+                    <div class="review-header">
+                        <span class="author">Анна К.</span>
+                    </div>
+                    <p class="review-text">«Они действительно невесомые! Купила модель Classic White — цвет чистый, материал безумно нежный. Ноги просто поют после каблуков. Отдельное спасибо за эстетичный сайт!»</p>
+                </article>
+                
+                <!-- Заменен класс с glass-card на custom-review-card -->
+                <article class="custom-review-card">
+                    <div class="review-header">
+                        <span class="author">Дмитрий М.</span>
+                    </div>
+                    <p class="review-text">«Заказал синие Dark Cumulus. Подошва не скользит по паркету, очень тихие. Ощущения от ходьбы непривычные, как будто наступаешь на мягкий мох. Топовое качество.»</p>
+                </article>
+                
+            </div>
         </div>
     </main>
 
+    <!-- Подвал сайта -->
     <footer><p>&copy; 2026 CLUFT — Мягкость в деталях</p></footer>
 </body>
 </html>
